@@ -271,15 +271,16 @@ def main():
 
     elif args.classify_knn:
         fr.loadKNNClassifier()
-        image = cv2.imread(args.classify_svm)
+        image = cv2.imread(args.classify_knn)
         identities, boxes = recognizeFacesInImage(image, fr, align)
 
         # draw boxes over the recognized faces and label them
-        # inspired from https://www.pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/
         for indx, label in enumerate(identities):
             left, top, right, bottom = boxes[indx].left(), boxes[indx].top(), boxes[indx].right(), boxes[indx].bottom()
-            cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 1)
-            cv2.putText(image, label, (left, top), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 1)
+            cv2.rectangle(image, (left, top), (right, bottom), (0, 0, 255), 2)
+            cv2.rectangle(image, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
+            font = cv2.FONT_HERSHEY_DUPLEX
+            cv2.putText(image, label, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
         # show the output image
         cv2.imshow("Faces", image)
@@ -293,10 +294,12 @@ def main():
         # draw boxes over the recognized faces and label them
         for indx, label in enumerate(identities):
             left, top, right, bottom = boxes[indx].left(), boxes[indx].top(), boxes[indx].right(), boxes[indx].bottom()
-            cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 1)
-            cv2.putText(image, label, (left, top), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 1)
+            cv2.rectangle(image, (left, top), (right, bottom), (0, 0, 255), 2)
+            cv2.rectangle(image, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
+            font = cv2.FONT_HERSHEY_DUPLEX
+            cv2.putText(image, label, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
-        # show the output image
+        # show the output images
         cv2.imshow("Faces", image)
         cv2.waitKey(0)
 
